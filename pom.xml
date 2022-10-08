@@ -103,7 +103,7 @@
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>Mithun Technologies Snapshot Nexus Repository </name>
-	      <url>http://:172.31.47.2468081/Shafiya/repository/amazon-snapshot/</url>
+	      <url>http://172.31.47.246:8081/Shafiya/repository/amazon-snapshot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
