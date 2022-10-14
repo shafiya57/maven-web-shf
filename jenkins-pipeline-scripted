@@ -1,0 +1,29 @@
+node {
+
+echo "The job name is: ${env.JOB_NAME}"
+echo "The node name is: ${env.NODE_NAME}"
+echo "The build number is: ${env.BUILD_NUMBER}"
+
+def mavenHome = tool name: 'maven 3.8.6'
+stage('CheckOutCode'){
+git branch: 'development', credentialsId: '4b312874-5421-4b96-9d54-2defed346e14', url: 'https://github.com/shafiya57/maven-web-shf.git'
+}
+stage('Build'){
+sh "${mavenHome}/bin/mvn package"
+}
+stage('ExecuteSonarQubeReport')
+{
+sh "${mavenHome}/bin/mvn clean sonar:sonar"
+}
+
+stage('UploadArtifactsIntoNexus')
+{
+sh "${mavenHome}/bin/mvn clean deploy"
+}
+
+stage('DeployAppIntoToCatServer'){
+sshagent(['d66f6ffb-59ff-4431-9200-fbd022c3409a']) {
+    sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.34.57:/opt/apache-tomcat-9.0.65/webapps/"
+}
+}
+} //node closing
