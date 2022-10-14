@@ -1,10 +1,13 @@
 node {
 
+def mavenHome = tool name: 'maven 3.8.6'
+
 echo "The job name is: ${env.JOB_NAME}"
 echo "The node name is: ${env.NODE_NAME}"
 echo "The build number is: ${env.BUILD_NUMBER}"
 
-def mavenHome = tool name: 'maven 3.8.6'
+properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), [$class: 'JobLocalConfiguration', changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
+
 stage('CheckOutCode'){
 git branch: 'development', credentialsId: '4b312874-5421-4b96-9d54-2defed346e14', url: 'https://github.com/shafiya57/maven-web-shf.git'
 }
