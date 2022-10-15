@@ -2,6 +2,8 @@ node {
 
 try {
 
+slaclnotification('STARTED')
+
 def mavenHome = tool name: 'maven 3.8.6'
 
 echo "The job name is: ${env.JOB_NAME}"
