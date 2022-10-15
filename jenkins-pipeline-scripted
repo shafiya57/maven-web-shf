@@ -2,7 +2,7 @@ node {
 
 try {
 
-slaclnotification('STARTED')
+slackNotifications('STARTED')
 
 def mavenHome = tool name: 'maven 3.8.6'
 
