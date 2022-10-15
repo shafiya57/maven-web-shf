@@ -28,7 +28,7 @@ throw e
 } //catch closing
 
 finally {
-buildnotifications(currentBuild.result)
+slackNotifications(currentBuild.result)
 } //finally closing
 
 /*
