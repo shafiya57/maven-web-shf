@@ -33,7 +33,7 @@ finally {
 slackNotifications(currentBuild.result)
 } //finally closing
 
-/*
+
 stage('UploadArtifactsIntoNexus')
 {
 sh "${mavenHome}/bin/mvn clean deploy"
@@ -44,7 +44,7 @@ sshagent(['d66f6ffb-59ff-4431-9200-fbd022c3409a']) {
     sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.34.57:/opt/apache-tomcat-9.0.65/webapps/"
 }
 }
-*/
+
 } //node closing
 
 //Code Snippet for sending slack notifications.
