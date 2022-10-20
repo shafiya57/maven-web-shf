@@ -1,3 +1,5 @@
+@library('sharelib')_
+
 node {
 
 try {
@@ -33,7 +35,6 @@ finally {
 slackNotifications(currentBuild.result)
 } //finally closing
 
-/*
 stage('UploadArtifactsIntoNexus')
 {
 sh "${mavenHome}/bin/mvn clean deploy"
@@ -44,35 +45,6 @@ sshagent(['d66f6ffb-59ff-4431-9200-fbd022c3409a']) {
     sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.34.57:/opt/apache-tomcat-9.0.65/webapps/"
 }
 }
-*/
+
 } //node closing
-
-//Code Snippet for sending slack notifications.
-
-def slackNotifications(String buildStatus = 'STARTED') {
-  // build status of null means successful
-  buildStatus =  buildStatus ?: 'SUCCESS'
-  //buildStatus = buildStatus ? "SUCCESS":"FAILURE"
-
-  // Default values
-  def colorName = 'RED'
-  def colorCode = '#FF0000'
-  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-  def summary = "${subject} (${env.BUILD_URL})"
-
-  // Override default values based on build status
-  if (buildStatus == 'STARTED') {
-    colorName = 'YELLOW'
-    colorCode = '#FFFF00'
-  } else if (buildStatus == 'SUCCESS') {
-    colorName = 'GREEN'
-    colorCode = '#00FF00'
-  } else {
-    colorName = 'RED'
-    colorCode = '#FF0000'
-  }
-
-  // Send notifications
-  slackSend (color: colorCode, message: summary, channel: "#amazon-dev")
-}
 
