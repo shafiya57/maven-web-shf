@@ -1,4 +1,4 @@
-@library('sharelib')_
+@library('sharedlibs')_
 
 node {
 
